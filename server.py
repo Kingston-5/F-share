@@ -3,6 +3,8 @@
 import argparse
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from files import getFiles, getDirs
+from html import ulify
 
 parser = argparse.ArgumentParser(
                     prog = 'Server',
@@ -29,50 +31,21 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
 
-from functools import partial
-
-
-class ExampleHandler(SimpleHTTPRequestHandler):
-    def __init__(self, foo, bar, qux, *args, **kwargs):
-        self.foo = foo
-        self.bar = bar
-        self.qux = qux
-        # BaseHTTPRequestHandler calls do_GET **inside** __init__ !!!
-        # So we have to call super().__init__ after setting attributes.
-        super().__init__(*args, **kwargs)
-
-    def do_HEAD(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-
-    def do_GET(self):
-        self.do_HEAD()
-        self.wfile.write('<h1>{!r} {!r} {!r}<h1>\n'
-                         .format(self.foo, self.bar, self.qux)
-                         .encode('utf8'))
-
 
 
 context = {
-    "invoice_number": "12345",
-    "date": "2023-04-25",
-    "customer_name": "John Doe",
-    "total": 85,
+    "directories": ulify(getDirs()),
+    "files": ulify(getFiles())
 }
 
-with open("index.tmp.html", "r") as file:
-    html = file.read().format(**context)
+def generate(filename, context):
+    with open(f'./templates/{filename}.tmp', "r") as file:
+        html = file.read().format(**context)
 
-with open("index.html", "w") as file:
-    file.write(html)
+    with open(f'{filename}.html', "w") as file:
+        file.write(html)
 
-# We "partially apply" the first three arguments to the ExampleHandler
-#handler = partial(ExampleHandler, args.addr, args.port, 'hey')
-# .. then pass it to HTTPHandler as normal:
-#server = HTTPServer(('', 8000), handler)
-#server.serve_forever()
-
+generate('index', context)
 run()
 #ip=$(ip addr show scope global up | grep -E inet | cut -c 10-24)
 

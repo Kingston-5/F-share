@@ -23,15 +23,8 @@
 
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
     <div id="main">
-        <ul id=>
-<li id=>6-reasons for a website</li>
-<li id=>5-types of websites</li>
-</ul>
-        <ul id=>
-<li id=>ra-dragon-UpKHoF7fYUw-unsplash.jpg</li>
-<li id=>ian-dooley-TLD6iCOlyb0-unsplash.jpg</li>
-<li id=>richard-horvath-OcXxgXYucHo-unsplash.jpg</li>
-</ul>
+        {directories}
+        {files}
     </div>
     
   </body>
