@@ -32,6 +32,23 @@ li {
   justify-content: space-between;
   align-items: center;
 }
+
+li span {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+li a {
+  width: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 /* navigation */
 nav{
   margin: 0;
@@ -55,8 +72,8 @@ nav{
   align-items: start;
   }
 
-.main .dirs {
-  width: 95%;
+.main .dirs, .singles {
+  width: 100%;
   margin: 0;
   padding: 1rem;
   display: flex;
@@ -65,7 +82,12 @@ nav{
   align-items: start;
 }
 
-.dirs .dir {
+.dirs {
+  border-bottom: 1px solid var(--color-1)
+}
+
+.dirs .dir, .singles .single  {
+  padding-top: .5rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -73,12 +95,16 @@ nav{
   align-items: start;
 }
 
-.dir .controls {
+.dir .controls, .singles .single {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: start;
+}
+
+.single span {
+  width: 70%;
 }
 
 .controls p {
@@ -98,12 +124,16 @@ nav{
   transition: 0.4s;
 }
 
+.panel li {
+  padding-top: .5rem;
+}
+
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .accordion:hover {
+.active, .accordion:hover, li a:hover {
   background-color: var(--color-2);
 }
 
-.accordion svg:hover {
+.accordion svg:hover, li a svg:hover {
   fill: var(--color-2);
 }
 

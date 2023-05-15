@@ -1,10 +1,9 @@
 
 
-def ulify(elements, parentId = '', childId = ''):
-    string = f'<ul id="{parentId}">\n'
+def ulify(elements, parentClass = '', childClass = ''):
+    string = f'<ul class="{parentClass}">\n'
     for s in elements:
-        string += '<li id="{childId}">\n<span>' + iconify(s[-4:]) + str(s) + '</span>' + f'<a href="./public/{s}" download>' + iconify('download') + '</a>\n</li>\n'
-        print(iconify(s[-4:]))
+        string += f'<li class="{childClass}">\n<span>' + iconify(s[-4:]) + str(s) + '</span>' + f'<a href="./public/{s}" download>' + iconify('download') + '</a>\n</li>\n'
     string += '</ul>\n'
     return string
 
