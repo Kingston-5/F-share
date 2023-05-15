@@ -27,8 +27,7 @@ def bindAddress(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler)
     try:
         httpd = server_class(server_address, handler_class)
     except OSError as e:
-        print('error: ')
-        print(e)
+        print(f'error: {e}')
         exit()
 
 def run():
@@ -43,8 +42,9 @@ def run():
 bindAddress()
 
 context = {
-    "directories": nestedUlify(getDirs()),
-    "files": ulify(getFiles())
+        "address": f'{server_address[0]}:{server_address[1]}',
+        "directories": nestedUlify(getDirs(), parentClass='dirs', childClass='dir'),
+        "files": ulify(getFiles())
 }
 
 def generate(filename, context):
