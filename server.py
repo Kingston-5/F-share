@@ -44,7 +44,7 @@ bindAddress()
 context = {
         "address": f'{server_address[0]}:{server_address[1]}',
         "directories": nestedUlify(getDirs(), parentClass='dirs', childClass='dir'),
-        "files": ulify(getFiles(), parentClass='singles', childClass='single')
+        "files": ulify(getFiles(), parentClass='singles', childClass='e')
 }
 
 def generate(filename, context):
