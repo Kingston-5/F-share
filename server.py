@@ -1,6 +1,7 @@
 #!/bin/python 
 
 import argparse
+import sys
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from files import getFiles, getDirs
@@ -11,25 +12,26 @@ parser = argparse.ArgumentParser(
                     description = 'Starts and Manages the python server',
                     epilog = 'u')
 
-parser.add_argument('-a', '--addr')     # server host
+parser.add_argument('-a', '--addr', type=str, default='127.0.0.1')     # server host
 
-parser.add_argument('-p', '--port')     # server port
+parser.add_argument('-p', '--port', type=int, default=8000)     # server port
 
 
 args = parser.parse_args()
 
+def bindAddress(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):        
+    global server_address
+    server_address = (args.addr, int(args.port))
 
-def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
-    if args.addr is None and args.port is not None:     # only port was specified
-        server_address = ('', int(args.port))
-    if args.addr is not None and args.port is None:     # only addr was specified
-        server_address = (args.addr, '')
-    if args.addr is not None and args.port is not None:     # both addr and port were specified
-        server_address = (args.addr, int(args.port))
-    else:
-        server_address = ('', 8000)     #neither addr or port were specified
-    httpd = server_class(server_address, handler_class)
+    global httpd
+    try:
+        httpd = server_class(server_address, handler_class)
+    except OSError as e:
+        print('error: ')
+        print(e)
+        exit()
 
+def run():
     try:
         print(f'Sharing On http://{server_address[0]}:{server_address[1]}')
         httpd.serve_forever()
@@ -37,6 +39,8 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
         print(sys.exc_info())
         exit()
 
+
+bindAddress()
 
 context = {
     "directories": nestedUlify(getDirs()),
