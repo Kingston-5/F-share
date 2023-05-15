@@ -3,7 +3,7 @@
 def ulify(elements, parentId = "", childId = ""):
     string = f"<ul id='{parentId}'>\n"
     for s in elements:
-        string += "\n" + "<li id={childId}>" + iconify(s[-4:]) + str(s) + "</li>"
+        string += "\n" + "<li id={childId}>" + iconify(s[-4:]) + str(s) +  f'<a href="./public/{s}" download><i class="fa-solid fa-download"></i></a></li>'
         print(iconify(s[-4:]))
     string += "\n</ul>"
     return string
@@ -12,10 +12,12 @@ def ulify(elements, parentId = "", childId = ""):
 def nestedUlify(elements, parentId = "", childId = ""):
     string = f"<div id='{parentId}'>\n"
     for e in elements:
-        string += f'<p>{iconify()} {list(e.items())[0][0]}</p>\n'
-        string += "<ul>"
+        parentDir = list(e.items())[0][0]
+        string += f'<p>{iconify()} {parentDir}</p>\n'
+        string += '<button class="accordion"><i class="fa-solid fa-folder-open"></i></button>'
+        string += "<ul class='panel'>"
         for li in list(e.items())[0][1]:
-            string += '<li>' +iconify(li[-4:]) + li + '</li>'
+            string += '<li>' +iconify(li[-4:]) + li + f'<a href="./public/{parentDir}/{li}" download><i class="fa-solid fa-download"></i></a></li>'
         string += "</ul>"
     string += "\n</div>"
     return string
