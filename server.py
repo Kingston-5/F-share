@@ -4,7 +4,7 @@ import argparse
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from files import getFiles, getDirs
-from html import ulify
+from html import ulify, nestedUlify
 
 parser = argparse.ArgumentParser(
                     prog = 'Server',
@@ -17,7 +17,7 @@ parser.add_argument('-p', '--port')     # server port
 
 
 args = parser.parse_args()
-print(args.addr, args.port)
+
 
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
     if args.addr is None and args.port is not None:     # only port was specified
@@ -29,12 +29,17 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
     else:
         server_address = ('', 8000)     #neither addr or port were specified
     httpd = server_class(server_address, handler_class)
-    httpd.serve_forever()
 
+    try:
+        print(f'Sharing On http://{server_address[0]}:{server_address[1]}')
+        httpd.serve_forever()
+    except:
+        print(sys.exc_info())
+        exit()
 
 
 context = {
-    "directories": ulify(getDirs()),
+    "directories": nestedUlify(getDirs()),
     "files": ulify(getFiles())
 }
 

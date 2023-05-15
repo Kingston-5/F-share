@@ -6,6 +6,11 @@
     --color-4: #e7d3cc;
 }
 
+@font-face {
+    font-family: iconmoon;
+    src: url(../fonts/iconmoon.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -50,9 +55,8 @@
   }
   
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-  #main {
-    transition: margin-left .5s;
-    padding: 20px;
+  main {
+    background-color: var(--color-4);
   }
   
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

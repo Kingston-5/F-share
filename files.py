@@ -1,14 +1,19 @@
 from os import listdir
 from os.path import isfile, isdir, join
+from html import ulify
 
 public = './public'
-print(listdir('./public'))
+#print(listdir('./public'))
 
-def getFiles():
-    return [f for f in listdir(public) if isfile(join(public, f))]
+def getFiles(directory = public):
+    return [f for f in listdir(directory) if isfile(join(directory, f))]
 
 def getDirs():
-    return [d for d in listdir(public) if isdir(join(public, d))]
+    dirs = []
+    for d in listdir(public):
+        if isdir(join(public, d)):
+            dirs.append({d:getFiles(join(public, d))})
+    return dirs
 
 #print(f"Files: {files} \n\n")
 #print(f"Dirs: {dirs} ")
